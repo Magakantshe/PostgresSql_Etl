@@ -20,18 +20,31 @@ The pipeline performs the following tasks:
 
 ## Project Structure
 orders-data-pipeline/
+
 │
+
 ├── main.py
+
 ├── config.yaml
+
 ├── requirements.txt
+
 │
+
 ├── data/
+
 │   ├── customers.csv
+
 │   ├── orders.jsonl
+
 │   └── order_items.csv
+
 │
+
 │
+
 ├── README.md
+
 └── SOLUTION.md
 
 
