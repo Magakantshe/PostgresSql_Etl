@@ -33,11 +33,17 @@ orders-data-pipeline/
 
 ├── data/
 
-│   ├── customers.csv
+   │   
+   
+   ├── customers.csv
 
-│   ├── orders.jsonl
+   │  
+   
+   ├── orders.jsonl
 
-│   └── order_items.csv
+   │   
+
+   └── order_items.csv
 
 │
 
