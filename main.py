@@ -41,7 +41,7 @@ DB_PARAMS = {
 
 
 # Data file locations
-
+# The pipeline expects these files to exist. If not, it will create sample data for demonstration.
 PROJECT_DIR = Path(__file__).resolve().parent
 DATA_PATH = Path(os.getenv("DATA_PATH", PROJECT_DIR / "data"))
 
@@ -49,7 +49,7 @@ CUSTOMERS_FILE = DATA_PATH / "customers.csv"
 ORDERS_FILE = DATA_PATH / "orders.jsonl"
 ITEMS_FILE = DATA_PATH / "order_items.csv"
 
-
+# Ensure data files exist or create sample data
 def ensure_data_files():
     DATA_PATH.mkdir(parents=True, exist_ok=True)
     if not CUSTOMERS_FILE.exists():
@@ -63,10 +63,10 @@ def ensure_data_files():
         ITEMS_FILE.write_text("order_id,line_no,sku,quantity,unit_price,category\n1001,1,SKU-001,2,30.25,Tools\n")
 
 
-# ======================================================
+
 # DATABASE INITIALIZATION
 # Creates tables and analytical views
-# ======================================================
+
 def init_db():
 
     logger.info("Creating database tables")
@@ -122,7 +122,7 @@ def init_db():
                 unit_price NUMERIC(12,2),
                 category TEXT,
 
-                -- Composite primary key
+                -- Composite primary key (ensures unique line items per order)
                 PRIMARY KEY(order_id,line_no),
 
                 -- Ensure item belongs to a valid order
@@ -142,9 +142,9 @@ def init_db():
     logger.info("Database initialized successfully")
 
 
-# ======================================================
+
 # SQL ANALYTICS VIEWS
-# ======================================================
+
 def create_views(cur):
 
     
@@ -195,9 +195,9 @@ def create_views(cur):
     """)
 
 
-# ======================================================
+
 # DATA CLEANING FUNCTIONS
-# ======================================================
+
 
 
 # Clean customers dataset
@@ -224,7 +224,7 @@ def clean_customers(df):
         "true": True,
         "false": False
     }).fillna(False)
-
+    print(df["is_active"])
     # Remove duplicate emails keeping earliest signup
     df = df.sort_values("signup_date").drop_duplicates("email")
 
@@ -279,25 +279,25 @@ def clean_items(df, valid_orders):
     return df
 
 
-# ======================================================
+
 # FAST DATA LOADING USING POSTGRES COPY
-# ======================================================
+
 def copy_dataframe(conn, df, table):
 
     # Convert dataframe to CSV buffer
-    buffer = StringIO()
+    buffer = StringIO() # In-memory text stream
     df.to_csv(buffer, index=False, header=False)
-    buffer.seek(0)
+    buffer.seek(0)   
 
     # COPY command loads data much faster than inserts
     with conn.cursor() as cur:
-        with cur.copy(f"COPY {table} FROM STDIN WITH CSV") as copy:
+        with cur.copy(f"COPY {table} FROM STDIN WITH CSV") as copy: # Open a COPY stream
             copy.write(buffer.read())
 
 
-# ======================================================
+
 # MAIN ETL PIPELINE
-# ======================================================
+
 def run_etl():
 
     logger.info("Starting ETL pipeline")
@@ -334,13 +334,13 @@ def run_etl():
     logger.info(f"ETL completed in {time.time() - start:.2f} seconds")
 
 
-# ======================================================
+
 # GENERATE MARKDOWN REPORT
-# ======================================================
+
 def generate_report():
 
     logger.info("Generating report")
-
+    # Query analytical views and format as markdown tables
     with psycopg.connect(**DB_PARAMS) as conn:
 
         daily = pd.read_sql("SELECT * FROM daily_metrics", conn)
@@ -366,9 +366,9 @@ def generate_report():
     logger.info("REPORT.md generated successfully")
 
 
-# ======================================================
+
 # MAIN PROGRAM ENTRY POINT
-# ======================================================
+
 if __name__ == "__main__":
 
     # Run entire pipeline automatically
