@@ -1,0 +1,9 @@
+order_id,line_no,sku,quantity,unit_price,category
+1001,1,SKU-100,2,30.25,electronics
+1001,2,SKU-200,1,60.00,accessories
+1002,1,SKU-300,1,80.00,home
+1003,1,SKU-100,3,30.25,electronics
+1004,1,SKU-400,2,30.00,books
+1005,1,SKU-500,4,50.00,fashion
+1006,1,SKU-200,1,60.00,accessories
+1006,2,SKU-300,1,35.99,home

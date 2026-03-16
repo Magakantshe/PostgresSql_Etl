@@ -1,0 +1,6 @@
+{"order_id":1001,"customer_id":1,"order_ts":"2023-01-10T10:15:00Z","status":"placed","total_amount":120.50,"currency":"usd"}
+{"order_id":1002,"customer_id":2,"order_ts":"2023-01-11T12:20:00Z","status":"shipped","total_amount":80.00,"currency":"gbp"}
+{"order_id":1003,"customer_id":3,"order_ts":"2023-01-12T09:45:00Z","status":"placed","total_amount":150.75,"currency":"zar"}
+{"order_id":1004,"customer_id":3,"order_ts":"2023-01-13T11:00:00Z","status":"refunded","total_amount":60.00,"currency":"zar"}
+{"order_id":1005,"customer_id":5,"order_ts":"2023-01-14T14:30:00Z","status":"shipped","total_amount":200.00,"currency":"zar"}
+{"order_id":1006,"customer_id":1,"order_ts":"2023-01-15T16:10:00Z","status":"placed","total_amount":95.99,"currency":"usd"}

@@ -1,0 +1,7 @@
+customer_id,email,full_name,signup_date,country_code,is_active
+1,john.doe@email.com,John Doe,2022-01-10,us,true
+2,jane.smith@email.com,Jane Smith,2022-02-15,gb,true
+3,alex.mokoena@email.com,Alex Mokoena,2022-03-05,za,true
+4,linda.johnson@email.com,Linda Johnson,2022-04-18,us,false
+5,peter.naidoo@email.com,Peter Naidoo,2022-05-22,za,true
+6,sarah.kim@email.com,Sarah Kim,2022-06-01,kr,true
