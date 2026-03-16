@@ -9,15 +9,15 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
-# ---------------------------------------
+
 # Load environment variables from .env
-# ---------------------------------------
+
 load_dotenv()
 
 
-# ---------------------------------------
+
 # Configure logging to show pipeline steps
-# ---------------------------------------
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
@@ -26,10 +26,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-# ---------------------------------------
+
 # Database connection parameters
 # These are loaded from the .env file
-# ---------------------------------------
+
 DB_PARAMS = {
     "host": os.getenv("DB_HOST"),
     "port": os.getenv("DB_PORT"),
@@ -39,9 +39,9 @@ DB_PARAMS = {
 }
 
 
-# ---------------------------------------
+
 # Data file locations
-# ---------------------------------------
+
 PROJECT_DIR = Path(__file__).resolve().parent
 DATA_PATH = Path(os.getenv("DATA_PATH", PROJECT_DIR / "data"))
 
@@ -76,9 +76,9 @@ def init_db():
 
         with conn.cursor() as cur:
 
-            # ---------------------------------------
+            
             # Customers table
-            # ---------------------------------------
+            
             cur.execute("""
             CREATE TABLE IF NOT EXISTS customers(
                 customer_id INTEGER PRIMARY KEY,
@@ -90,9 +90,9 @@ def init_db():
             );
             """)
 
-            # ---------------------------------------
+            
             # Orders table
-            # ---------------------------------------
+            
             cur.execute("""
             CREATE TABLE IF NOT EXISTS orders(
                 order_id BIGINT PRIMARY KEY,
@@ -110,9 +110,9 @@ def init_db():
             );
             """)
 
-            # ---------------------------------------
+            
             # Order Items table
-            # ---------------------------------------
+            
             cur.execute("""
             CREATE TABLE IF NOT EXISTS order_items(
                 order_id BIGINT,
@@ -147,9 +147,9 @@ def init_db():
 # ======================================================
 def create_views(cur):
 
-    # ---------------------------------------
+    
     # Daily revenue metrics
-    # ---------------------------------------
+    
     cur.execute("""
     CREATE OR REPLACE VIEW daily_metrics AS
     SELECT
@@ -162,9 +162,9 @@ def create_views(cur):
     ORDER BY date;
     """)
 
-    # ---------------------------------------
+    
     # Top spending customers
-    # ---------------------------------------
+    
     cur.execute("""
     CREATE OR REPLACE VIEW top_customers AS
     SELECT
@@ -179,9 +179,9 @@ def create_views(cur):
     LIMIT 10;
     """)
 
-    # ---------------------------------------
+    
     # Best selling products
-    # ---------------------------------------
+    
     cur.execute("""
     CREATE OR REPLACE VIEW top_skus AS
     SELECT
@@ -199,9 +199,9 @@ def create_views(cur):
 # DATA CLEANING FUNCTIONS
 # ======================================================
 
-# ---------------------------------------
+
 # Clean customers dataset
-# ---------------------------------------
+
 def clean_customers(df):
 
     # Normalize emails
@@ -231,9 +231,9 @@ def clean_customers(df):
     return df
 
 
-# ---------------------------------------
+
 # Clean orders dataset
-# ---------------------------------------
+
 def clean_orders(df, valid_customers):
 
     # Convert timestamp
@@ -262,9 +262,9 @@ def clean_orders(df, valid_customers):
     return df
 
 
-# ---------------------------------------
+
 # Clean order items dataset
-# ---------------------------------------
+
 def clean_items(df, valid_orders):
 
     # Remove invalid quantity or price
